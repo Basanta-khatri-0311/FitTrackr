@@ -1,17 +1,24 @@
-import { useEffect } from "react";
-import { getWorkouts } from "./api";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 
 function App() {
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      const userId = "YOUR_USER_ID_HERE";
-      const { data } = await getWorkouts(userId);
-      console.log(data);
-    };
-    fetchWorkouts();
-  }, []);
+  const isLoggedIn = !!localStorage.getItem("token"); 
 
-  return <div>Check console for workouts</div>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        {/* <Route
+          path="/"
+          element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
+        /> */}
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
